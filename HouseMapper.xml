@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="net.scit.reboard.dao.HouseMapper">
+	<insert id="insertHouse" parameterType="House">
+		INSERT INTO HOUSE
+			(housenum, housetype, housesize, dongnum, address, custnum, 
+			selltype, sellstatus, price, deposit, monthlyfee, hitcount, regdate)
+		VALUES
+			(#{housenum}, #{housetype}, #{housesize}, #{dongnum}, #{address}, #{custnum}, 
+			#{selltype}, #{sellstatus}, #{price}, #{deposit}, #{monthlyfee}, #{hitcount}, #{regdate})
+	</insert>
+
+	<select id="listHouse" resultType ="House">
+		SELECT * 
+		FROM HOUSE
+		ORDER BY housenum
+	</select>
+	
+	<select id="countHouse" resultType ="int">
+		SELECT count(*)
+		FROM HOUSE
+	</select>
+
+	<select id="readHouse" parameterType ="int" resultType ="House">
+		SELECT *
+		FROM HOUSE
+		WHERE housenum = #{housenum}
+	</select>
+
+	<update id="updateHouse" parameterType ="House">
+		UPDATE HOUSE
+		SET 	housetype = #{housetype},
+			housesize = #{housesize},
+			dongnum = #{dongnum},
+			address = #{address},
+			custnum = #{custnum},
+			selltype = #{selltype},
+			sellstatus = #{sellstatus},
+			price = #{price},
+			deposit = #{deposit},
+			monthlyfee = #{monthlyfee},
+			hitcount = #{hitcount},
+			regdate = #{regdate},
+		WHERE housenum = #{housenum}
+	</update>
+	
+	<delete id="deleteHouse" parameterType ="int">
+		DELETE FROM HOUSE
+		WHERE housenum = #{housenum}
+	</delete>
+
+</mapper>
+
+<!-- insert, update, delete는 reusltType을 쓰면 오류 -->

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="net.scit.reboard.dao.CommentsMapper">
+	<insert id="insertComments" parameterType="comments">
+		INSERT INTO COMMENTS
+			(COMNUM,HOUSENUM,USERID,TEXT,REGDATE) 
+		VALUES
+			(comm_seq.nexrval, #{housenum}, #{userid}, #{text}, sysdate)
+	</insert>
+
+
+	<select id="listComments" parameterType ="int" resultType ="comments">
+		SELECT * 
+		FROM COMMENTS
+		WHERE housenum = #{housenum}
+		ORDER BY comnum
+	</select>
+	
+	<select id="countComments" parameterType ="int" resultType ="int">
+		SELECT count(*)
+		FROM COMMENTS
+		WHERE housenum = #{housenum}
+	</select>
+
+	<select id="readComments" parameterType ="int" resultType ="comments">
+		SELECT *
+		FROM COMMENTS
+		WHERE comnum = #{comnum}
+	</select>
+
+	<update id="updateComments" parameterType ="comments">
+		UPDATE COMMENTS
+		SET   HOUSENUM =  #{housenum}, 
+		      USERID =  #{userid},
+		      TEXT =  #{text},
+		      REGDATE =  #{regdate}
+		WHERE COMNUM = #{comnum}
+	</update>
+
+	<delete id="deleteComments" parameterType ="int">
+		DELETE FROM COMMENTS
+		WHERE COMNUM = #{comnum}
+	</delete>
+
+</mapper>
+
+<!-- insert, update, delete는 reusltType을 쓰면 오류 -->
